@@ -1,1 +1,372 @@
-Start
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>MyWorkout V2</title>
+
+<style>
+
+body{
+font-family:-apple-system,sans-serif;
+padding:20px;
+background:#f7f7f7;
+max-width:700px;
+margin:auto;
+}
+
+h1,h2{
+margin-top:30px;
+}
+
+.date{
+font-size:20px;
+margin-bottom:25px;
+}
+
+.box{
+background:white;
+padding:18px;
+border-radius:16px;
+margin-bottom:14px;
+}
+
+input,select,button{
+width:100%;
+padding:14px;
+margin-top:10px;
+border-radius:12px;
+border:1px solid #ddd;
+font-size:16px;
+box-sizing:border-box;
+}
+
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+button{
+background:#dcdcdc;
+font-weight:700;
+}
+
+.history{
+background:white;
+padding:15px;
+border-radius:16px;
+margin-bottom:10px;
+}
+
+.small{
+font-size:14px;
+color:#666;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🏋️ MyWorkout</h1>
+
+<div class="date" id="date"></div>
+
+<h2>Maskiner</h2>
+
+<div class="box">
+
+<select id="machineSelect">
+<option value="">Välj maskin</option>
+</select>
+
+<input id="newMachine" placeholder="Ny maskin">
+
+<input id="weight" placeholder="Kg">
+
+<div class="row">
+
+<input id="reps" placeholder="Reps">
+
+<input id="sets" placeholder="Set">
+
+</div>
+
+<input id="setting" placeholder="Inställning">
+
+<button onclick="saveMachine()">
+Spara maskin
+</button>
+
+</div>
+
+
+<h2>Aktiviteter</h2>
+
+<div class="box">
+
+<select id="activitySelect">
+<option value="">
+Välj aktivitet
+</option>
+</select>
+
+<input id="newActivity"
+placeholder="Ny aktivitet">
+
+<input
+id="minutes"
+placeholder="Minuter">
+
+<button
+onclick="saveActivity()">
+
+Spara aktivitet
+
+</button>
+
+</div>
+
+
+<h2>Historik</h2>
+
+<div id="history"></div>
+
+
+<script>
+
+const data=
+JSON.parse(
+localStorage.getItem(
+"myWorkoutV2"
+)
+)||{
+
+machines:{},
+activities:{},
+history:[]
+}
+
+document.getElementById(
+"date"
+).innerHTML=
+
+new Date()
+.toLocaleDateString(
+"sv-SE",
+{
+weekday:"long",
+year:"numeric",
+month:"long",
+day:"numeric"
+}
+)
+
+render()
+
+function save(){
+
+localStorage.setItem(
+"myWorkoutV2",
+JSON.stringify(data)
+)
+
+}
+
+function saveMachine(){
+
+const name=
+
+document
+.getElementById(
+"newMachine"
+).value
+
+if(!name)return
+
+data.machines[
+name
+]={
+
+weight:
+weight.value,
+
+reps:
+reps.value,
+
+sets:
+sets.value,
+
+setting:
+setting.value
+
+}
+
+data.history.unshift({
+
+date:
+new Date()
+.toLocaleDateString(
+"sv-SE"
+),
+
+type:
+"Maskin",
+
+name,
+
+text:
+
+weight.value+
+" kg • "+
+reps.value+
+" reps • "+
+sets.value+
+" set • "+
+setting.value
+
+})
+
+save()
+
+render()
+
+}
+
+function saveActivity(){
+
+const name=
+document
+.getElementById(
+"newActivity"
+).value
+
+if(!name)return
+
+data.activities[
+name
+]={
+minutes:
+minutes.value
+}
+
+data.history.unshift({
+
+date:
+new Date()
+.toLocaleDateString(
+"sv-SE"
+),
+
+type:
+"Aktivitet",
+
+name,
+
+text:
+minutes.value+
+" min"
+
+})
+
+save()
+
+render()
+
+}
+
+function render(){
+
+machineSelect.innerHTML=
+'<option>Välj maskin</option>'
+
+Object.keys(
+data.machines
+)
+
+.forEach(
+
+m=>{
+
+machineSelect.innerHTML+=
+
+'<option>'+
+m+
+'</option>'
+
+}
+
+)
+
+activitySelect.innerHTML=
+'<option>Välj aktivitet</option>'
+
+Object.keys(
+data.activities
+)
+
+.forEach(
+
+a=>{
+
+activitySelect.innerHTML+=
+
+'<option>'+
+a+
+'</option>'
+
+}
+
+)
+
+history.innerHTML=
+
+data.history
+
+.map(
+
+x=>
+
+`
+
+<div class="history">
+
+<b>
+
+${x.date}
+
+</b>
+
+<br>
+
+${x.type}
+
+<br>
+
+${x.name}
+
+<br>
+
+<div class="small">
+
+${x.text}
+
+</div>
+
+</div>
+
+`
+
+)
+
+.join("")
+
+}
+
+</script>
+
+</body>
+
+</html>
