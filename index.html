@@ -342,7 +342,18 @@ a+
 '</option>'
 
 }
+activitySelect.onchange = ()=>{
 
+  const a = data.activities[activitySelect.value]
+
+  if(!a) return
+
+  weight.value = a.weight
+  reps.value = a.reps
+  sets.value = a.sets
+  setting.value = a.setting
+
+}
 )
 
 document.getElementById("history").innerHTML=
