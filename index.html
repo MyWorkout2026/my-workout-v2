@@ -305,7 +305,19 @@ m+
 }
 
 )
+machineSelect.onchange=()=>{
 
+const m=data.machines[machineSelect.value]
+
+if(!m)return
+
+newMachine.value=machineSelect.value
+weight.value=m.weight
+reps.value=m.reps
+sets.value=m.sets
+setting.value=m.setting
+
+}
 activitySelect.innerHTML=
 '<option>Välj aktivitet</option>'
 
