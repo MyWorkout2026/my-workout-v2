@@ -126,7 +126,9 @@ onclick="saveActivity()">
 Spara aktivitet
 
 </button>
-
+<button onclick="saveWorkout()">
+  Spara träning
+</button>
 </div>
 
 
@@ -247,7 +249,13 @@ save()
 render()
 
 }
+function saveWorkout(){
 
+  saveMachine()
+
+  saveActivity()
+
+}
 function saveActivity(){
 
 const name=
