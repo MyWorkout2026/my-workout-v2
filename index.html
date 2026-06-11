@@ -183,7 +183,26 @@ JSON.stringify(data)
 )
 
 }
+}
 
+function saveActivity(){
+
+    const name =
+        document.getElementById("newActivity").value
+
+    if(!name) return
+
+    data.activities[name]={
+        minutes: minutes.value
+    }
+
+    save()
+    render()
+}
+
+
+
+  
 function saveMachine(){
 
 const name=
