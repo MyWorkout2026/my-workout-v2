@@ -251,34 +251,35 @@ render()
 }
 function saveWorkout(){
 
-  saveMachine()
+    const activity = activitySelect.value
+    const machine = machineSelect.value
 
-  saveActivity()
+    if(activity){
+        data.history.unshift({
+            date:new Date().toLocaleDateString("sv-SE"),
+            type:"Aktivitet",
+            name:activity,
+            text:data.activities[activity].minutes + " min"
+        })
+    }
 
-}
-function saveActivity(){
+    if(machine){
+        const m = data.machines[machine]
 
-const name=
-document
-.getElementById(
-"newActivity"
-).value
+        data.history.unshift({
+            date:new Date().toLocaleDateString("sv-SE"),
+            type:"Maskin",
+            name:machine,
+            text:
+                m.weight + " kg • " +
+                m.reps + " reps • " +
+                m.sets + " set"
+        })
+    }
 
-if(!name)return
+    save()
 
-data.activities[
-name
-]={
-minutes:
-minutes.value
-}
-
-
-newActivity.value=""
-minutes.value=""
-save()
-
-render()
+    render()
 
 }
 
