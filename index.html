@@ -307,7 +307,11 @@ function saveWorkout() {
       text: minutes.value + " min"
     })
   }
-
+alert(
+  "Maskin: " + machineName +
+  "\nAktivitet: " + activityName +
+  "\nHistory längd före save: " + data.history.length
+)
   save()
   render()
 }
