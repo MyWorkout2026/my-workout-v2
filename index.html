@@ -268,13 +268,11 @@ save()
 render()
 
 }
-function saveWorkout(){
-  alert("Spara träning fungerar")
-
+function saveWorkout() {
   // ===== MASKIN =====
   const machineName = newMachine.value.trim() || machineSelect.value.trim()
 
-  if(machineName){
+  if (machineName) {
     data.machines[machineName] = {
       weight: weight.value,
       reps: reps.value,
@@ -297,7 +295,7 @@ function saveWorkout(){
   // ===== AKTIVITET =====
   const activityName = newActivity.value.trim() || activitySelect.value.trim()
 
-  if(activityName){
+  if (activityName) {
     data.activities[activityName] = {
       minutes: minutes.value
     }
