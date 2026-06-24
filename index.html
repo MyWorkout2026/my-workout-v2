@@ -269,40 +269,50 @@ render()
 
 }
 function saveWorkout(){
-    alert("Spara träning fungerar")
+  alert("Spara träning fungerar")
 
-    const activity = activitySelect.value
-    const machine = machineSelect.value
+  // ===== MASKIN =====
+  const machineName = newMachine.value.trim() || machineSelect.value.trim()
 
-    if(activity){
-        data.history.unshift({
-            date:new Date().toLocaleDateString("sv-SE"),
-            type:"Aktivitet",
-            name:activity,
-            text:data.activities[activity].minutes + " min"
-        })
+  if(machineName){
+    data.machines[machineName] = {
+      weight: weight.value,
+      reps: reps.value,
+      sets: sets.value,
+      setting: setting.value
     }
 
-    if(machine){
-        const m = data.machines[machine]
+    data.history.unshift({
+      date: new Date().toLocaleDateString("sv-SE"),
+      type: "Maskin",
+      name: machineName,
+      text:
+        weight.value + " kg • " +
+        reps.value + " reps • " +
+        sets.value + " set • " +
+        setting.value
+    })
+  }
 
-        data.history.unshift({
-            date:new Date().toLocaleDateString("sv-SE"),
-            type:"Maskin",
-            name:machine,
-            text:
-                m.weight + " kg • " +
-                m.reps + " reps • " +
-                m.sets + " set"
-        })
+  // ===== AKTIVITET =====
+  const activityName = newActivity.value.trim() || activitySelect.value.trim()
+
+  if(activityName){
+    data.activities[activityName] = {
+      minutes: minutes.value
     }
 
-    save()
+    data.history.unshift({
+      date: new Date().toLocaleDateString("sv-SE"),
+      type: "Aktivitet",
+      name: activityName,
+      text: minutes.value + " min"
+    })
+  }
 
-    render()
-
+  save()
+  render()
 }
-
 function render(){
 
 machineSelect.innerHTML=
